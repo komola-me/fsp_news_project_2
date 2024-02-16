@@ -1,0 +1,20 @@
+from django.urls import path
+from .views import news_list, news_detail, homePageView, contactPageView, aboutPageView, ContactPageView, HomePageView, LocalNewsListView, WorldNewsListView, TechNewsListView, SportNewsListView
+
+urlpatterns = [
+    # path('', homePageView, name='home_page'),
+    path('', HomePageView.as_view(), name='home_page'),
+    path('all/', news_list, name='all_news_list'),
+
+    path('local/', LocalNewsListView.as_view(), name="local_news_page"),
+    path('world/', WorldNewsListView.as_view(), name="world_news_page"),
+    path('tech/', TechNewsListView.as_view(), name="tech_news_page"),
+    path('sport/', SportNewsListView.as_view(), name="sport_news_page"),
+
+    path('<slug:news>/', news_detail, name='news_detail_page'),
+    path('about', aboutPageView, name='about_page'),
+    # path('contact-us', contactPageView, name='contact_page'),
+    path('contact-us/', ContactPageView.as_view(), name='contact_page'),
+
+
+]
