@@ -6,6 +6,7 @@ from .models import News, Category, Contact
 from django.db import models
 from .forms import ContactForm
 from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DeleteView
+from django.utils.text import slugify
 
 # Create your views here.
 def news_list(request):
@@ -171,3 +172,7 @@ class NewsCreateView(CreateView):
     model = News
     template_name = 'crud/news_create.html'
     fields = ('title', 'slug', 'body', 'image', 'category', 'status')
+
+    def your_view(request):
+        News.slug = slugify(['title'])
+        News.save()
