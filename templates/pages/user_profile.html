@@ -6,12 +6,14 @@
 
 {% block content %}
     <h3>Xush kelibsiz, {{ user.username }}</h3>
+
     <h2>Siz haqingizdagi malumotlar</h2>
     <label>Username:</label><input value="{{ user.username }}" readonly><br>
     <label>Email:</label><input value="{{ user.email }}"readonly><br>
     <label>Ismingiz:</label><input value="{{ user.first_name }}"readonly><br>
     <label>Familyangiz:</label><input value="{{ user.last_name }}"readonly><br>
 
-    <h4><a href="#">Parolni almashtirish</a></h4>
+    <h4><a href="{% url "logout" %}">Logout</a></h4>
+    <h4><a href="{% url "password_change" %}">Parolni almashtirish</a></h4>
 
 {% endblock content %}
