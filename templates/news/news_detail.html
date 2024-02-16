@@ -11,4 +11,10 @@
     <img src="{{ news.image.url }}" alt="">
     <p> {{ news.body }} </p>
 
+
+    <div class="card-footer text-center">
+        <a href="{% url "news_update" news.slug %}">Edit</a>
+        <a href="{% url "news_delete" news.slug %}">Delete</a>
+    </div>
+
 {% endblock content %}

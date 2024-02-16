@@ -1,10 +1,11 @@
 from msilib.schema import ListView
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from .models import News, Category, Contact
 from django.db import models
 from .forms import ContactForm
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DeleteView
 
 # Create your views here.
 def news_list(request):
@@ -140,7 +141,7 @@ class TechNewsListView(ListView):
     context_object_name = "tech_news"
 
     def get_queryset(self):
-        news = self.model.published.all().filter(category__name='Technology')
+        news = self.model.published.all().filter(category__name='Tech')
         return news
 
 
@@ -152,3 +153,15 @@ class SportNewsListView(ListView):
     def get_queryset(self):
         news = self.model.published.all().filter(category__name='Sport')
         return news
+
+
+class NewsUpdateView(UpdateView):
+    model = News
+    fields = ('title', 'body', 'image', 'category', 'status', )
+    template_name = 'crud/news_edit.html'
+
+
+class NewsDeleteView(DeleteView):
+    model = News
+    template_name = 'crud/news_delete.html'
+    success_url = reverse_lazy('home_page')
