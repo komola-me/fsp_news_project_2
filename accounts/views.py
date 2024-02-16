@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView, AuthenticationForm
 from .forms import LoginForm
 
 # Create your views here.
@@ -38,3 +39,17 @@ def dashboard_view(request):
         }
 
     return render(request, 'pages/user_profile.html', context)
+
+
+class ProfileAuthenticationForm(AuthenticationForm):
+    error_messages = {
+        "invalid_login": (
+            "Iltimos to'g'ri %(username)s and password. Note that both "
+            "fields may be case-sensitive."
+        ),
+        "inactive": ("Bu akkaunt is inactive."),
+    }
+
+
+class UserLoginView(LoginView):
+    form_class = ProfileAuthenticationForm
