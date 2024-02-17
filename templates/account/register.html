@@ -9,7 +9,7 @@
     <p>Ro'yhatdan o'tkazish uchun quyidagi formani to'ldiring</p>
 
     <form method="post">{% csrf_token %}
-        {{ user_form.as_p }}
+        {{ form.as_p }} {% comment "use user_form.as_p if you are using user_register function" %}{% endcomment %}
         <button type="submit">Sign Up</button>
     </form>
 {% endblock content %}
