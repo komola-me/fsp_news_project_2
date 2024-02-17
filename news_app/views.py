@@ -8,8 +8,9 @@ from .forms import ContactForm
 from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DeleteView
 from django.utils.text import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from news_project.custom_permissions import OnlyLoggedSuperUser
+from django.contrib.auth.models import User
 
 # Create your views here.
 def news_list(request):
@@ -179,3 +180,14 @@ class NewsCreateView(OnlyLoggedSuperUser, CreateView):
     # def your_view(request):
     #     News.slug = slugify(['title'])
     #     News.save()
+
+@user_passes_test(lambda u:u.is_superuser)
+@login_required
+def admin_page_view(request):
+    admin_users = User.objects.filter(is_superuser=True)
+
+    context = {
+        "admin_users": admin_users,
+        }
+
+    return render(request, 'pages/admin_page.html', context)

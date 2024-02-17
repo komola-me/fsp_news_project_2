@@ -8,7 +8,9 @@
     <h3>Xush kelibsiz, {{ user.username }}</h3>
 
     <h2>Siz haqingizdagi malumotlar</h2>
-    <img src="{{ profile.photo.url }}" alt="" width=150 height=150>
+
+    {% comment %} <img src="{{ profile.photo.url }}" alt="" width=150 height=150> {% endcomment %}
+
     <h4>Tug'ilgan yilingiz: {{ profile.date_of_birth }}</h4>
     <label>Username:</label><input value="{{ user.username }}" readonly><br>
     <label>Email:</label><input value="{{ user.email }}"readonly><br>

@@ -11,10 +11,11 @@
     <img src="{{ news.image.url }}" alt="">
     <p> {{ news.body }} </p>
 
-
+    {% if request.user.is_authenticated and request.user.is_superuser %}
     <div class="card-footer text-center">
         <a href="{% url "news_update" news.slug %}">Edit</a>
         <a href="{% url "news_delete" news.slug %}">Delete</a>
     </div>
+    {% endif %}
 
 {% endblock content %}
