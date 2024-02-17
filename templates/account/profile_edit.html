@@ -1,0 +1,16 @@
+{% extends "news/base.html" %}
+
+{% load static %}
+
+{% block title %}Profile Edit{% endblock title %}
+
+{% block content %}
+    <h1>Foydalanuvchi malumotlarini o'zgartirish</h1>
+    <p>Profil malumotlaringizni o'zgartirmoqchi bo'lsangiz quyidagi forma orqali qiling.</p>
+
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+{% endblock content %}
