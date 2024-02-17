@@ -8,12 +8,18 @@
     <h3>Xush kelibsiz, {{ user.username }}</h3>
 
     <h2>Siz haqingizdagi malumotlar</h2>
+    <img src="{{ profile.photo.url }}" alt="" width=150 height=150>
+    <h4>Tug'ilgan yilingiz: {{ profile.date_of_birth }}</h4>
     <label>Username:</label><input value="{{ user.username }}" readonly><br>
     <label>Email:</label><input value="{{ user.email }}"readonly><br>
     <label>Ismingiz:</label><input value="{{ user.first_name }}"readonly><br>
     <label>Familyangiz:</label><input value="{{ user.last_name }}"readonly><br>
 
-    <h4><a href="{% url "logout" %}">Logout</a></h4>
-    <h4><a href="{% url "password_change" %}">Parolni almashtirish</a></h4>
+    <div style="display: flex; gap: 20px;">
+        <h4><a class="btn btn-blue" href="{% url "logout" %}">Logout</a></h4>
+        <h4><a class="btn btn-danger" href="{% url "password_change" %}">Parolni almashtirish</a></h4>
+        <h4><a class="btn btn-orange" href="{% url "edit_user" %}">Edit Profile</a></h4>
+    </div>
+
 
 {% endblock content %}
