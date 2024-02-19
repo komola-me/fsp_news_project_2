@@ -25,7 +25,7 @@ def news_list(request):
 
 def news_detail(request, news):
     news = get_object_or_404(News, slug=news, status=News.Status.Published)
-    comments = News.comments.filter(active=True)
+    comments = news.comments.filter(active=True)
     new_comment = None
 
     if request.method == "POST":
@@ -38,6 +38,7 @@ def news_detail(request, news):
             new_comment.user = request.user
             #malumotlar bazasiga saqlaymiz
             new_comment.save()
+            comment_form = CommentForm()
     else:
         comment_form = CommentForm()
 

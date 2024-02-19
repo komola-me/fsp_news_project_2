@@ -18,4 +18,37 @@
     </div>
     {% endif %}
 
+    {% for comment in comments %}
+    <div class="comments" style="padding: 10px;">
+        <p class="font-weight-bold">
+            {{ comment.user }}
+            <span class="text-muted font-weight-normal">
+                {{ comment.created_time }}
+            </span>
+        </p>
+        {{ comment.body | linebreaks }}
+    </div>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+    <div class="col-md-8 card mb-4 mt-3">
+        <div class="card-body">
+            <h3>Izoh qoldirish</h3>
+
+            <form action="" method="post" style="margin-top: 1.3em;">{% csrf_token %}
+                {{ comment_form.as_p }}
+
+                <button class="btn btn-blue" type="submit">Comment</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+        <div class="card-body">
+            <p class="text-danger">Only logged in users can comment. Please,
+                <a class="btn btn-blue" href="{% url "login" %}">Log In</a>
+                <a class="btn btn-red" href="{% url "user_register" %}">Sign Up</a>
+            </p>
+        </div>
+    {% endif %}
+
 {% endblock content %}
