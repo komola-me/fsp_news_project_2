@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +49,7 @@
 
           </div>
           <div class="header_top_right">
+
             {% if request.user.is_authenticated %}
             <p><a style="color: palegreen;" href="{% url "logout" %}">Log Out</a></p>
             <p><a style="color:yellow" href="{% url "user_profile" %}">My Profile</a></p>
@@ -55,6 +57,24 @@
             <p><a style="color:yellow" href="{% url "login" %}">Login</a></p>
             {% endif %}
             <p>{% now "jS F Y H:i" %}</p>
+
+
+
+              <form style="width: fit-content; padding-top: 20px; padding-bottom: 20px; margin-left: 100px;" action="{% url "set_language" %}" method="post">{% csrf_token %}
+                <input name="text" type="hidden" value="{{ redirect_to }}">
+                <select name="language">
+                  {% get_current_language as LANGUAGE_CODE %}
+                  {% get_available_languages as LANGUAGES %}
+                  {% get_language_info_list for LANGUAGES as languages %}
+                  {% for language in languages %}
+                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local }} ({{language.code}})
+                  </option>
+                  {% endfor %}
+                </select>
+                <input type="submit" value="Go">
+              </form>
+
 
           </div>
         </div>
