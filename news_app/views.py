@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from .models import News, Category, Contact
 from django.db import models
-from .forms import ContactForm
+from .forms import CommentForm, ContactForm
 from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DeleteView
 from django.utils.text import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -25,8 +25,28 @@ def news_list(request):
 
 def news_detail(request, news):
     news = get_object_or_404(News, slug=news, status=News.Status.Published)
+    comments = News.comments.filter(active=True)
+    new_comment = None
+
+    if request.method == "POST":
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            #new comment object will be created but not saved to db
+            new_comment = comment_form.save(commit=False)
+            new_comment.news = news
+            # izoh egasini so'rov yuborayotgan userga bog'ladik
+            new_comment.user = request.user
+            #malumotlar bazasiga saqlaymiz
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
+
     context = {
-        "news": news
+        "news": news,
+        "comments": comments,
+        "new_comment": new_comment,
+        "comment_form": comment_form,
     }
 
     return render(request, 'news/news_detail.html', context)
