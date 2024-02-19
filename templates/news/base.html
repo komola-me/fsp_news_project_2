@@ -39,7 +39,13 @@
               <li><a href="{% url "home_page" %}">Home</a></li>
               <li><a href="{% url "about_page" %}">About</a></li>
               <li><a href="{% url "contact_page" %}">Contact</a></li>
+              {% if user.is_authenticated and user.is_superuser %}
+              <li>
+                <a href="{% url "admin_page" %}">Admin Panel</a>
+              </li>
+              {% endif %}
             </ul>
+
           </div>
           <div class="header_top_right">
             {% if request.user.is_authenticated %}
@@ -75,6 +81,7 @@
           <li><a href="{% url "sport_news_page" %}">Sport</a></li>
           <li><a href="{% url "contact_page" %}">Contact Us</a></li>
           <li><a href="pages/404.html">404 Page</a></li>
+
           <li style="height: 50px; display: flex; align-items: center;">
             <form action="{% url "search_results" %}" method="get">{% csrf_token %}
               <input type="search" name="q" id="" placeholder="Search..." class="form-control">

@@ -1,5 +1,6 @@
 {% extends "news/base.html" %}
 {% load static %}
+{% load hitcount_tags %}
 
 {% block title %}
 News Feed
@@ -33,7 +34,7 @@ News Feed
                     <img alt="" src="{{ news.image.url}}">
                   </a>
                   <div class="media-body">
-                    <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }}</a>
+                    <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }} <i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for news %} </a>
                   </div>
                 </div>
               </li>
@@ -82,6 +83,7 @@ News Feed
                     </a>
                     <div class="media-body">
                       <a href="{{ local.get_absolute_url }}" class="catg_title">{{ local.title }}</a>
+                      <p><h5><i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for local %} </h5></p>
                     </div>
                   </div>
                 </li>
@@ -117,6 +119,7 @@ News Feed
                         <img alt="" src="{{ world_news.image.url }}"> </a>
                       <div class="media-body">
                         <a href="{{ world_news.get_absolute_url }}" class="catg_title">{{ world_news.title }}</a>
+                        <p><h5><i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for world_news %} </h5></p>
                       </div>
                     </div>
                   </li>
@@ -148,7 +151,9 @@ News Feed
                       <a href="{{ technews.get_absolute_url }}" class="media-left">
                         <img alt="" src="{{ technews.image.url }}"> </a>
                       <div class="media-body">
-                        <a href="{{ technews.get_absolute_url }}" class="catg_title">{{ technews.title }}</a> </div>
+                        <a href="{{ technews.get_absolute_url }}" class="catg_title">{{ technews.title }}</a>
+                        <h5><i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for technews %}</h5>
+                      </div>
                     </div>
                   </li>
                   {% endif %}
@@ -215,7 +220,9 @@ News Feed
                 {% if forloop.counter > 1 %}
                 <li>
                   <div class="media wow fadeInDown"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
-                    <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }}</a> </div>
+                    <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }}</a>
+                      <p><h5><i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for news %} </h5></p>
+                    </div>
                   </div>
                 </li>
                 {% endif %}

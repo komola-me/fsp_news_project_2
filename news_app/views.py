@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from news_project.custom_permissions import OnlyLoggedSuperUser
 from django.contrib.auth.models import User
 from django.db.models import Q
+from hitcount.views import HitCountDetailView
 
 # Create your views here.
 def news_list(request):
@@ -24,15 +25,21 @@ def news_list(request):
     return render(request, "news/news_list.html", context=context)
 
 
-class NewsDetailView(DetailView):
+class NewsDetailView(HitCountDetailView, DetailView):
     model = News
     template_name = "news/news_detail.html"
     context_object_name = 'news'
     slug_url_kwarg = 'news' # the name of the URL keyword argument used to retrieve the news object.
+    count_hit = True
+
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comments'] = self.object.comments.filter(active=True)
+        # news = self.object
+        # news.view_count = news.view_count + 1
+        # news.save()
         context['comment_form'] = CommentForm()
 
         return context
@@ -53,6 +60,8 @@ class NewsDetailView(DetailView):
 def news_detail(request, news):
     news = get_object_or_404(News, slug=news, status=News.Status.Published)
     comments = news.comments.filter(active=True)
+    # news.view_count = news.view_count + 1
+    # news.save()
     new_comment = None
 
     if request.method == "POST":
