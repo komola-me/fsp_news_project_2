@@ -37,6 +37,7 @@ class NewsDetailView(HitCountDetailView, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comments'] = self.object.comments.filter(active=True)
+        context['comment_count'] = self.object.comments.filter(active=True).count()
         # news = self.object
         # news.view_count = news.view_count + 1
         # news.save()

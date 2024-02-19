@@ -9,8 +9,9 @@
 
     <h2> {{ news.title }} </h2>
     <h5> {{ news.published_time }} </h5>
-    <h5><i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for news %} </h5>
-    <img src="{{ news.image.url }}" alt="">
+    <span><i class="fa fa-eye" aria-hidden="true"></i> {% get_hit_count for news %} </span>
+    <span>Izohlar soni: {{comment_count}} </span>
+    <img src="{{ news.image.url }}" alt="" style="display: block;">
     <p> {{ news.body }} </p>
 
     {% if request.user.is_authenticated and request.user.is_superuser %}
@@ -19,6 +20,13 @@
         <a href="{% url "news_delete" news.slug %}">Delete</a>
     </div>
     {% endif %}
+
+    {% if comment_count > 0 %}
+        <h3>Bu yangilikka {{comment_count }} ta izoh qoldirilgan.</h3>
+    {% else %}
+        <h3>Bu yangilikka izoh qoldirilmagan.</h3>
+    {% endif %}
+
 
     {% for comment in comments %}
     <div class="comments" style="padding: 10px;">
