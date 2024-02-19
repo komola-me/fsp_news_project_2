@@ -39,6 +39,8 @@ class News(models.Model):
     objects = models.Manager()
     published = PublishedManager()
 
+    view_count = models.IntegerField(default=0)
+
     class Meta:
         ordering = ["-published_time"]
 

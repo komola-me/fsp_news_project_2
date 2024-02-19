@@ -2,15 +2,16 @@ from msilib.schema import ListView
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from .models import News, Category, Contact
+from .models import News, Category, Contact, Comment
 from django.db import models
 from .forms import CommentForm, ContactForm
-from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DeleteView
+from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DeleteView, DetailView
 from django.utils.text import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
 from news_project.custom_permissions import OnlyLoggedSuperUser
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 # Create your views here.
 def news_list(request):
@@ -21,6 +22,32 @@ def news_list(request):
         "news_list": news_list
     }
     return render(request, "news/news_list.html", context=context)
+
+
+class NewsDetailView(DetailView):
+    model = News
+    template_name = "news/news_detail.html"
+    context_object_name = 'news'
+    slug_url_kwarg = 'news' # the name of the URL keyword argument used to retrieve the news object.
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = self.object.comments.filter(active=True)
+        context['comment_form'] = CommentForm()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.news = self.object
+            new_comment.user = request.user
+            new_comment.save()
+            return self.render_to_response(self.get_context_data(comment_form=CommentForm()))
+        else:
+            return self.render_to_response(self.get_context_data(comment_form=comment_form))
 
 
 def news_detail(request, news):
@@ -212,3 +239,14 @@ def admin_page_view(request):
         }
 
     return render(request, 'pages/admin_page.html', context)
+
+
+class SearchResultsList(ListView):
+    model = News
+    template_name = 'news/search_results.html'
+    context_object_name = 'results_news'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return News.objects.filter(Q(title__icontains=query) | Q(body__icontains=query)
+            )

@@ -1,0 +1,14 @@
+{% extends "news/base.html" %}
+
+{% block title %}Qidiruv Natijalari{% endblock title %}
+
+{% block content %}
+    <h2>Search results</h2>
+
+    {% for news in results_news %}
+        <h3><a class="text-danger" href="{{ news.get_absolute_url }}">{{ news.title }}</a></h3>
+        <p><img src="{{ news.image.url }}" alt="" width="30%"></p>
+        <p>{{ news.body | truncatewords:30}}</p>
+    {% endfor %}
+
+{% endblock content %}
