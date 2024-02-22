@@ -1,9 +1,11 @@
 {% extends "news/base.html" %}
 {% load static %}
 {% load hitcount_tags %}
+{% load i18n %}
 
 {% block title %}
-News Feed
+{% blocktrans %}News Feed{% endblocktrans %}
+
 {% endblock title %}
 
 {% block content %}
@@ -23,7 +25,7 @@ News Feed
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="latest_post">
-          <h2><span>Latest post</span></h2>
+          <h2><span>{% blocktrans %}Latest post{% endblocktrans %}</span></h2>
           <div class="latest_post_container">
             <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
             <ul class="latest_postnav">
@@ -51,7 +53,7 @@ News Feed
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="single_post_content">
-            <h2><span>Local News</span></h2>
+            <h2><span>{% blocktrans %}Local News{% endblocktrans %}</span></h2>
             <div class="single_post_content_left">
               <ul class="business_catgnav  wow fadeInDown">
                 {% for news in local_news_list %}
@@ -95,7 +97,7 @@ News Feed
           <div class="fashion_technology_area">
             <div class="fashion">
               <div class="single_post_content">
-                <h2><span>World News</span></h2>
+                <h2><span>{% blocktrans %}World News{% endblocktrans %}</span></h2>
                 <ul class="business_catgnav wow fadeInDown">
                   {% for world_news in world_news_list %}
                   {% if forloop.first %}
@@ -130,7 +132,7 @@ News Feed
             </div>
             <div class="technology">
               <div class="single_post_content">
-                <h2><span>Technology</span></h2>
+                <h2><span>{% blocktrans %}Technology{% endblocktrans %}</span></h2>
                 <ul class="business_catgnav">
                   {% for technews in tech_news_list %}
                   {% if forloop.first %}
@@ -199,7 +201,7 @@ News Feed
           </div>
 
           <div class="single_post_content">
-            <h2><span>Sport</span></h2>
+            <h2><span>{% blocktrans %}Sport{% endblocktrans %}</span></h2>
             <div class="single_post_content_left">
               <ul class="business_catgnav">
                 {% for news in sport_news_list %}
@@ -235,7 +237,7 @@ News Feed
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">
-            <h2><span>Popular Post</span></h2>
+            <h2><span>{% blocktrans %}Popular Post{% endblocktrans %}</span></h2>
             <ul class="spost_nav">
               <li>
                 <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{% static 'images/post_img1.jpg' %}"> </a>
@@ -263,7 +265,7 @@ News Feed
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
               <li role="presentation"><a href="#video" aria-controls="profile" role="tab" data-toggle="tab">Video</a></li>
-              <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Comments</a></li>
+              <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">{% blocktrans %}Comments{% endblocktrans %}</a></li>
             </ul>
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="category">
@@ -308,9 +310,9 @@ News Feed
             <h2><span>Sponsor</span></h2>
             <a class="sideAdd" href="#"><img src="{% static 'images/add_img.jpg' %}" alt=""></a> </div>
           <div class="single_sidebar wow fadeInDown">
-            <h2><span>Category Archive</span></h2>
+            <h2><span>{% blocktrans %}Category Archive{% endblocktrans %}</span></h2>
             <select class="catgArchive">
-              <option>Select Category</option>
+              <option>{% blocktrans %}Select Category{% endblocktrans %}</option>
               {% for category in categories %}
               <option>{{ category.name }}</option>
               {% endfor %}

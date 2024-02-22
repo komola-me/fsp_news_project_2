@@ -120,6 +120,19 @@ USE_I18N = True
 USE_TZ = True
 
 
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = [
+    ('uz', _("Uzbek")),
+    ('en', _("English")),
+    ('ru', _("Russian")),
+    ]
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+
+LOCALE_PATHS = BASE_DIR, 'locale'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -145,13 +158,3 @@ LOGIN_REDIRECT_URL = 'home_page'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_URL = 'login'
-
-from django.utils.translation import gettext_lazy as _
-
-LANGUAGES = [
-    ('uz', _("Uzbek")),
-    ('en', _("English")),
-    ('ru', _("Russian")),
-    ]
-
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
