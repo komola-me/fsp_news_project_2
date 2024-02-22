@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'hitcount',
+    'modeltranslation',
 
     'news_app',
     'accounts',
@@ -152,3 +153,5 @@ LANGUAGES = [
     ('en', _("English")),
     ('ru', _("Russian")),
     ]
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
